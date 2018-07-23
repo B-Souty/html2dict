@@ -6,11 +6,11 @@ class Html2Dict(object):
     def __init__(self, html_string, url=None):
 
         self.html_string = html_string
-        self.url = url
         self._tree = html.fromstring(self.html_string)
-        self._table_presents = self._tree.xpath('//table')
+        self.url = url
         if not self.url and self._tree.xpath('//link[@rel="canonical"]'):
             self.url = self._tree.xpath('//link[@rel="canonical"]')[0].get('href')
+        self._table_presents = self._tree.xpath('//table')
         self.tables = self._extract_tables()
 
     def _extract_tables(self):
@@ -54,12 +54,18 @@ class Html2Dict(object):
 
         # base case
         colspan = int(cell.attrib.get('colspan', 1))
+        # is_header = True if cell.tag == 'th' else False
         if (colspan > 1 or cell.attrib.get('Html2Dict_merged') == "True") and is_header:
                 cell.attrib['Html2Dict_merged'] = "True"
                 cell.attrib['colspan'] = str(colspan - 1)
                 next_cell_below = cell.getparent().getnext()[0]
                 cell.getparent().getnext().remove(next_cell_below)
-                return " ".join([i for i in cell.itertext() if i not in ('\\n',)]).strip() or "n/a" + "/" + Html2Dict.get_text_content(cell=next_cell_below)
+                cell_text = " ".join([i for i in cell.itertext() if i not in ('\\n',)]).strip() or "n/a"
+                cell_text = "/".join([
+                    cell_text,
+                    Html2Dict.get_text_content(cell=next_cell_below, is_header=True)
+                ])
+                return cell_text
         return " ".join([i for i in cell.itertext() if i not in ('\\n',)]).strip() or "n/a"
 
     @staticmethod
