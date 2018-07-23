@@ -44,14 +44,14 @@ class Html2Dict(object):
         self.tables = self._extract_tables()
 
     def _extract_tables(self):
-        """
-        Hidden method to initialize the self.tables attribute.
+        """Hidden method to initialize the self.tables attribute.
 
         Iterates over the tables in self._table_presents and returns a dict of
         the extracted header and data rows for each tables.
 
         Returns:
             tables (dict): this populate the tables attribute. For the structure please
+
         """
 
         tables = {}
@@ -110,6 +110,7 @@ class Html2Dict(object):
 
         Returns:
             _ (str): Text contect at the root of an html cell.
+
         """
         # base case
         colspan = int(cell.attrib.get('colspan', 1))
@@ -145,7 +146,6 @@ class Html2Dict(object):
                         data_rows (:obj:`list` of :obj:`str`)
                     )
                 )
-
 
         """
         copy_table = table.copy()
