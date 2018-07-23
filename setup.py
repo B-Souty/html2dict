@@ -6,7 +6,7 @@ URL = 'https://github.com/B-Souty/html2dict'
 EMAIL = 'benjamin.souty@gmail.com'
 AUTHOR = 'B-Souty'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = 0.1
+VERSION = '0.1.1'
 
 REQUIRED = [
     'lxml',
