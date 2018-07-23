@@ -2,6 +2,36 @@ from lxml import html
 
 
 class Html2Dict(object):
+    """Html to dictionaries extractor class
+
+    A simple html tables extractor.
+
+    Args:
+        html_string (str): String representation of an html.
+        url (str): Url of the website you are parsing
+
+    Attributes:
+        html_string (str): String representation of an html.
+        url (str): Url of the website you are parsing
+        _tree (HtmlElement): Html tree from the root of the provided html_string.
+        _table_presents (:obj:`list` of :obj:`dict`): List of tables present in the
+            html_string as html element.
+        tables (dict): dict of all the table present on the page (structure in Notes).
+
+    Notes:
+        Structure of a 'tables' dict:
+            dict(
+                table_n: dict(
+                    header_rows: list(
+                        header_row (:obj:`HtmlElement`),
+                    ),
+                    data_rows: list(
+                        data_row (:obj:`HtmlElement`),
+                    )
+                )
+            )
+
+    """
 
     def __init__(self, html_string, url=None):
 
@@ -14,6 +44,15 @@ class Html2Dict(object):
         self.tables = self._extract_tables()
 
     def _extract_tables(self):
+        """
+        Hidden method to initialize the self.tables attribute.
+
+        Iterates over the tables in self._table_presents and returns a dict of
+        the extracted header and data rows for each tables.
+
+        Returns:
+            tables (dict): this populate the tables attribute. For the structure please
+        """
 
         tables = {}
 
@@ -38,6 +77,15 @@ class Html2Dict(object):
 
     @staticmethod
     def is_header(row):
+        """For a given html row <tr>, returns True if all cells are header cells <th>.
+
+        Args:
+            row (HtmlElement): Any html row <tr>.
+
+        Returns:
+            bool:
+
+        """
 
         if not row.xpath('*'):
             return False
@@ -51,7 +99,18 @@ class Html2Dict(object):
 
     @staticmethod
     def get_text_content(cell, is_header=False):
+        """Get the text content of an html cell
 
+        Extract the text content of a cell in a html table. If the cell is part of a
+        merged header, join its text with a "/" with the text of the cell below it.
+
+        Args:
+            cell (HtmlElement): Html cell <td> or <th>
+            is_header (:obj:`bool`, optional): Is the cell a header. Default to False.
+
+        Returns:
+            _ (str): Text contect at the root of an html cell.
+        """
         # base case
         colspan = int(cell.attrib.get('colspan', 1))
         if (colspan > 1 or cell.attrib.get('Html2Dict_merged') == "True") and is_header:
@@ -64,7 +123,31 @@ class Html2Dict(object):
 
     @staticmethod
     def basic_table(table):
+        """ Transform a raw table to a slightly more advanced table.
 
+        Take a dict representation of a table with raw html elements as formatted in
+        self.tables (c.f. 'Notes' section of the class.) in input and returns a new
+        dict representation of it with the text content of those html elements.
+
+        Args:
+            table (dict): For the structure, please see the 'Notes' section of the class.
+
+        Returns:
+            _ (dict): For the structure, please see the 'Notes' section of this method.
+
+        Notes:
+            Structure of the returned dict:
+                dict(
+                    headers: list(
+                        headers (str) or None
+                    ),
+                    data_rows: list(
+                        data_rows (:obj:`list` of :obj:`str`)
+                    )
+                )
+
+
+        """
         copy_table = table.copy()
         header_rows = copy_table['header_rows']
         data_rows = copy_table['data_rows']
@@ -93,7 +176,24 @@ class Html2Dict(object):
         return {'headers': tmp_headers[0], 'data_rows': tmp_data_rows}
 
     def basic_tables(self):
+        """The most basic tables parser.
 
+        Returns:
+            my_basic_tables (dict): For the structure, please see the 'Notes' section
+                of this method.
+
+        Notes:
+            Structure of my_basic_tables:
+                If headers are found a row is a dict {header: data}. Otherwise a row is
+                a list of data.
+
+                dict(
+                    table_n: tuple(
+                        row (:obj:`dict` or :obj:`list`)
+                    )
+                )
+
+        """
         my_basic_tables = {}
         for my_table in self.tables:
             try:
@@ -113,7 +213,7 @@ class Html2Dict(object):
         return my_basic_tables
 
     def rich_tables(self):
-
+        """Coming soon."""
         raise NotImplementedError('This feature is coming soon.')
 
 if __name__ == '__main__':
