@@ -26,6 +26,7 @@ List of table types **not** currently supported:
   * Any tables embedded in iframes.
   * Tables with vertical headers (scope=“col”)
   * Tables with new header row after first set of data.
+  * Tables with merged tables accross multiple levels
 
 This project is still very new, if the type of table you are parsing is not in this, please let me know the outcome.
 
