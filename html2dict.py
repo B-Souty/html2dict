@@ -20,16 +20,18 @@ class Html2Dict(object):
 
     Notes:
         Structure of a 'tables' dict:
-            dict(
-                table_n: dict(
-                    header_rows: list(
-                        header_row (:obj:`HtmlElement`),
-                    ),
-                    data_rows: list(
-                        data_row (:obj:`HtmlElement`),
-                    )
-                )
-            )
+            {
+                table_n: {
+                    header_rows: [
+                        header_row,
+                        ...
+                    ],
+                    data_rows: [
+                        data_row,
+                        ...
+                    ]
+                }
+            }
 
     """
 
@@ -50,7 +52,8 @@ class Html2Dict(object):
         the extracted header and data rows for each tables.
 
         Returns:
-            tables (dict): this populate the tables attribute. For the structure please
+            dict: this populate the tables attribute. For the structure please
+                refer to the "Notes" section of the class.
 
         """
 
@@ -83,7 +86,7 @@ class Html2Dict(object):
             row (HtmlElement): Any html row <tr>.
 
         Returns:
-            bool:
+            True if the row is only made of 'header' cells (<th>).
 
         """
 
@@ -109,7 +112,7 @@ class Html2Dict(object):
             is_header (:obj:`bool`, optional): Is the cell a header. Default to False.
 
         Returns:
-            _ (str): Text contect at the root of an html cell.
+            str: Text content at the root of an html cell.
 
         """
         # base case
@@ -134,18 +137,18 @@ class Html2Dict(object):
             table (dict): For the structure, please see the 'Notes' section of the class.
 
         Returns:
-            _ (dict): For the structure, please see the 'Notes' section of this method.
+            dict: For the structure, please see the 'Notes' section of this method.
 
         Notes:
             Structure of the returned dict:
-                dict(
-                    headers: list(
-                        headers (str) or None
-                    ),
-                    data_rows: list(
-                        data_rows (:obj:`list` of :obj:`str`)
-                    )
-                )
+                {
+                    headers: [
+                        headers or None
+                    ],
+                    data_rows: [
+                        data_rows
+                    ]
+                }
 
         """
         copy_table = table.copy()
@@ -179,19 +182,18 @@ class Html2Dict(object):
         """The most basic tables parser.
 
         Returns:
-            my_basic_tables (dict): For the structure, please see the 'Notes' section
-                of this method.
+            dict: For the structure, please see the 'Notes' section of this method.
 
         Notes:
             Structure of my_basic_tables:
                 If headers are found a row is a dict {header: data}. Otherwise a row is
                 a list of data.
 
-                dict(
+                {
                     table_n: tuple(
-                        row (:obj:`dict` or :obj:`list`)
+                        row (:obj:`dict` or :obj:`list`),
                     )
-                )
+                }
 
         """
         my_basic_tables = {}
