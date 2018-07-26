@@ -1,3 +1,6 @@
+#### ⚠️Warning: This script is not ready for production use.⚠️
+*Not all tables are parseable yet. Please refer to the "Capabilities" section for a list of supported table types.*
+
 # Html2Dict
 
 Simple html tables extractor.
@@ -11,6 +14,20 @@ Simple html tables extractor.
 ## Installing
 
 1. `pip install html2dict`
+
+## Capabilities
+
+List of table types currently supported:
+  * Basic table without headers (returns a tuple of rows as simple list)
+  * Basic table with headers (returns a tuple of dictionaries)
+  * Complex tables with merged headers (returns a tuple of dictionaries)
+
+List of table types **not** currently supported:
+  * Any tables embedded in iframes.
+  * Tables with vertical headers (scope=“col”)
+  * Tables with new header row after first set of data.
+
+This project is still very new, if the type of table you are parsing is not in this, please let me know the outcome.
 
 ## Usage
 
@@ -113,8 +130,5 @@ extractor = Html2Dict(html_string=my_website.text)
 ...              'MD5 Sum': '779c4085464eb3ee5b1a4fffd0eabca4',
 ...              'Operating System': 'Windows',
 ...              'Version': 'Windows x86 web-based installer'})}
-
-
-
 
 ```
