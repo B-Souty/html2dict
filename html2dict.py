@@ -61,6 +61,12 @@ class Html2Dict(object):
 
         for ind_table, table in enumerate(self._table_presents):
 
+            if table.xpath('caption'):
+                caption = table.xpath('caption')[0]
+                table_name = self.get_text_content(caption)
+            else:
+                table_name = "table_{}".format(ind_table)
+
             my_header_rows = []
             my_data_rows = []
             t_body = table.xpath('*//tr') or table.xpath('tr')
@@ -72,7 +78,7 @@ class Html2Dict(object):
                 else:
                     my_data_rows.append(row)
 
-            tables["table_{}".format(ind_table)] = {
+            tables[table_name] = {
                 "header_rows" : my_header_rows,
                 "data_rows": my_data_rows,
             }
