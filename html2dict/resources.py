@@ -126,7 +126,6 @@ def get_text_content(cell):
 
     Args:
         cell (HtmlElement): Html cell <td> or <th>
-        cell_is_header (bool, optional): Is the cell a header. Default to False.
 
     Returns:
         str: Text content at the root of an html cell.
