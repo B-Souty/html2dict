@@ -10,6 +10,7 @@ VERSION = '0.1.1'
 
 REQUIRED = [
     'lxml',
+    'requests'
 ]
 
 try:
