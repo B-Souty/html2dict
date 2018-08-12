@@ -54,20 +54,26 @@ my_extractor = BasicTableExtractor.from_url(url=<url>)
 
 You can access the extracted tables from the basic_tables attribute.
 
-For example for https://www.python.org/downloads/release/python-370/
-
 ```python
 my_extractor.basic_tables
-
-{'table_0': <html2dict.Table object at 0x10700c828>}
 ```
 
 Finally, the data of the table can be accessed from the attributes data_rows or rows.
 
 ```python
-my_extractor.basic_tables['table_0']
+my_extractor.basic_tables[<table_name>].rows
+```
 
-pprint(test_html3.basic_tables['table_0'].rows)
+For example for https://www.python.org/downloads/release/python-370/
+
+```python
+my_extractor = BasicTableExtractor.from_url(url="https://www.python.org/downloads/release/python-370/")
+my_extractor.basic_tables
+
+{'table_0': <html2dict.Table object at 0x10700c828>}
+
+pprint(my_extractor.basic_tables['table_0'].rows)
+
 {'data': [{'Description': 'n/a',
            'File Size': '22745726',
            'GPG': 'SIG',
@@ -140,6 +146,5 @@ pprint(test_html3.basic_tables['table_0'].rows)
               'MD5 Sum',
               'File Size',
               'GPG']]}
-
 
 ```
