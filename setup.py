@@ -30,7 +30,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    py_modules=['html2dict'],
+    packages=['html2dict'],
     install_requires=REQUIRED,
     license='MIT',
     classifiers=[
