@@ -36,7 +36,7 @@ This project is still very new, if the type of table you are parsing is not in t
 
 Start by importing the desired type of extractor. (Only one available currently). 
 ```Python
-from html2dict import BasicTableExtractor
+from html2dict.exctractors import BasicTableExtractor
 ``` 
 
 Then instantiate an object with one of the 3 constructors provided
@@ -64,7 +64,9 @@ Finally, the data of the table can be accessed from the attributes data_rows or 
 my_extractor.basic_tables[<table_name>].rows
 ```
 
-For example for https://www.python.org/downloads/release/python-370/
+## Examples
+
+* for https://www.python.org/downloads/release/python-370/
 
 ```python
 my_extractor = BasicTableExtractor.from_url(url="https://www.python.org/downloads/release/python-370/")
