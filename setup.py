@@ -6,10 +6,11 @@ URL = 'https://github.com/B-Souty/html2dict'
 EMAIL = 'benjamin.souty@gmail.com'
 AUTHOR = 'B-Souty'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.1.1'
+VERSION = '0.2'
 
 REQUIRED = [
     'lxml',
+    'requests'
 ]
 
 try:
@@ -29,7 +30,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    py_modules=['html2dict'],
+    packages=['html2dict'],
     install_requires=REQUIRED,
     license='MIT',
     classifiers=[
