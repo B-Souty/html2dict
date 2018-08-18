@@ -15,7 +15,7 @@ Simple html tables extractor.
 ## Installing
 
 Create and activate a new Python virtual environment then install this dev branch with: 
-  * `pip3 install git+https://github.com/B-Souty/html2dict@wip/issue2/main` 
+  * `pip3 install html2dict` 
 
 ## Capabilities
 
